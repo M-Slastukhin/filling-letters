@@ -14,14 +14,14 @@ sheet = wb.active
 rows = sheet.max_row
 b_rows = 'B'+ str(rows)
 
-
+# Получение перечня оргвнизаций
 for column in sheet['B2':str(b_rows)]:
     for cell in column:
         if cell.value is None or cell.value == " ":
             continue
         choice_data.append(cell.value)
 
-
+# получение данных по выбранной организации
 def main(choice):
     choice= choice+2
     A = 'A'+str(choice)
@@ -48,7 +48,7 @@ def main(choice):
 
     return context
 
-
+# Пол адресата
 def get_gender(gender_form_wb):
         if gender_form_wb[0] == 'м':
             return 'male'
@@ -57,20 +57,20 @@ def get_gender(gender_form_wb):
         else:
             return 'male'
 
-
+# Определение обращения
 def get_accoct(gender):
     if gender == 'male':
         return 'Уважаемый'
     elif gender == 'female':
         return 'Уважаемая'
 
-
+# Инициалы
 def get_initials(name, patronymic):
     initials = ''
     initials = f'{name[0]}.{patronymic[0]}.'
     return initials
 
-
+# Фамилия родительный падеж
 def get_surname_dative(surname, gender):
     vowels = ['а', 'е', 'ё', 'и', 'й', 'о', 'у', 'э', 'ю', 'я']
     n = len(surname)
@@ -100,7 +100,7 @@ def get_surname_dative(surname, gender):
     surname_d = surname_d.capitalize()
     return surname_d
 
-
+# Должность адресата в родительном падеже
 def get_position_dative(position):
     split_str = position.split(' ')
     if len(split_str) == 1:
@@ -123,7 +123,7 @@ def get_position_dative(position):
         position_d = position
     return position_d.capitalize()
 
-
+# склонение названия организации
 def get_organization(organization):
     split_org = organization.split(' ')
     n = len(split_org)
@@ -143,7 +143,7 @@ def get_organization(organization):
     else: org_r = organization
     return org_r
 
-
+# получение навания для файла - название организации без ковычек
 def get_file_name(organization_name):
     file_name = ''
     n = len(organization_name)
@@ -152,25 +152,25 @@ def get_file_name(organization_name):
             file_name = file_name + organization_name[i]
     return file_name
 
-
+# создание письма
 def mail_save():
     doc_mail.render(context)
     file_name = get_file_name(context['organization'])
     doc_mail.save(f'письмо {file_name}.docx')
 
-
+# создание акта
 def act_save():
     doc_act.render(context)
     file_name = get_file_name(context['organization'])
     doc_act.save(f'акт {file_name}.docx')
 
-
+# создание схемы
 def plan_save():
     doc_plan.render(context)
     file_name = get_file_name(context['organization'])
     doc_plan.save(f'схема {file_name}.docx')
 
-
+# интерфейс
 sg.theme('BluePurple')   # цвет подложки
 # наполнение страницы.
 layout = [  [sg.Text('Выбор землепользователя')],
@@ -183,15 +183,13 @@ window = sg.Window('Заполнение писем', layout)
 while True:
     event, values = window.read()
     if event == '-combo_choice-':
-        #context = main(choice_data.index(values['-combo_choice-']))
+        context = main(choice_data.index(values['-combo_choice-']))
         print(choice_data.index(values['-combo_choice-']))
     if event == 'Создать письмо':
         mail_save()
     if event == 'Создать акт':
-        context = main(choice_data.index(values['-combo_choice-']))
         act_save()
     if event == 'Создать схему':
-        context = main(choice_data.index(values['-combo_choice-']))
         plan_save()
     if event == sg.WIN_CLOSED or event == 'Выход': # закрытие окна
         break
