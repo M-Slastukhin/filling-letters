@@ -59,10 +59,9 @@ def get_gender(gender_form_wb):
 
 # Определение обращения
 def get_accoct(gender):
-    if gender == 'male':
-        return 'Уважаемый'
-    elif gender == 'female':
+    if gender == 'female':
         return 'Уважаемая'
+    return 'Уважаемый'
 
 # Инициалы
 def get_initials(name, patronymic):
