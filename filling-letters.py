@@ -99,17 +99,15 @@ def get_surname_dative(surname, gender):
 def get_position_dative(position):
     split_str = position.split(' ')
     if len(split_str) == 1:
-        n = len(position)
         if position.lower() == 'глава':
-            position_d = position[0:-1]+'е'
-        elif position[-2:n] =='ль':
-            position_d = position[0:-1]+'ю'
+            position_d = position[:-1]+'е'
+        elif position[-2:] =='ль':
+            position_d = position[:-1]+'ю'
         else:
             position_d = position+'у'
     elif len(split_str) == 2:
-        n = len(split_str[0])
-        if split_str[0][-2:n] =='ый':
-            split_str[0] = split_str[0][0:-2]+'ому'
+        if split_str[0][-2:] =='ый':
+            split_str[0] = split_str[0][:-2]+'ому'
             split_str[1] = split_str[1]+'у'
             position_d = f'{split_str[0]} {split_str[1]}'
         else:
