@@ -140,16 +140,18 @@ def get_organization(organization):
             split_org[1] = split_org[1][0:-1] + 'я'
         for i in range(0, n):
             org_r = org_r + ' ' + split_org[i]
-    else: org_r = organization
+    else:
+        org_r = organization
     return org_r
 
-# получение навания для файла - название организации без ковычек
+# получение навания для файла - название организации без ковычек и символов, недопустимых для имени файла
 def get_file_name(organization_name):
-    file_name = ''
-    n = len(organization_name)
-    for i in range(0, n):
-        if organization_name[i] != '"':
-            file_name = file_name + organization_name[i]
+    file_name = organization_name.replace('?', '')
+    file_name = file_name.replace('"', '')
+    file_name = file_name.replace('\\', '')
+    file_name = file_name.replace('|', ' ')
+    file_name = file_name.replace('/', ' ')
+    file_name = file_name.replace(':', ' ')
     return file_name
 
 # создание письма
