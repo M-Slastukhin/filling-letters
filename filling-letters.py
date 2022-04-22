@@ -6,7 +6,6 @@ import PySimpleGUI as sg
 doc_mail = DocxTemplate('письмо_шаблон.docx')
 doc_act = DocxTemplate('акт_шаблон.docx')
 doc_plan = DocxTemplate('схема_шаблон.docx')
-landusers_data = []
 choice_data = []
 context = {}
 wb = openpyxl.load_workbook('landusers_list.xlsx')
@@ -23,6 +22,7 @@ for column in sheet['B2':str(b_rows)]:
 
 # получение данных по выбранной организации
 def main(choice):
+    landusers_data = []
     choice= choice+2
     A = 'A'+str(choice)
     G = 'G'+str(choice)
