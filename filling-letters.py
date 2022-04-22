@@ -70,18 +70,17 @@ def get_initials(name, patronymic):
 # Фамилия родительный падеж
 def get_surname_dative(surname, gender):
     vowels = ['а', 'е', 'ё', 'и', 'й', 'о', 'у', 'э', 'ю', 'я']
-    n = len(surname)
-    if surname[-2:n] == 'ко':
+    if surname[-2:] == 'ко':
         surname_d = surname
-    elif surname[-2:n] == 'ия':
-        surname_d = surname[0:-1]+'и'
+    elif surname[-2:] == 'ия':
+        surname_d = surname[:-1]+'и'
     elif gender == 'female':
-        if surname[-3:n] == 'ина':
-            surname_d = surname[0:-1]+'ой'
-        elif surname[-3:n] == 'ова':
-            surname_d = surname[0:-1]+'ой'
-        elif surname[-3:n] == 'ева':
-            surname_d = surname[0:-1]+'ой'
+        if surname[-3:] == 'ина':
+            surname_d = surname[:-1]+'ой'
+        elif surname[-3:] == 'ова':
+            surname_d = surname[:-1]+'ой'
+        elif surname[-3:] == 'ева':
+            surname_d = surname[:-1]+'ой'
         else:
             surname_d = surname
     elif gender == 'male':
@@ -94,8 +93,7 @@ def get_surname_dative(surname, gender):
                 break
         else:
             surname_d = f'{surname}у'
-    surname_d = surname_d.capitalize()
-    return surname_d
+    return surname_d.capitalize()
 
 # Должность адресата в родительном падеже
 def get_position_dative(position):
