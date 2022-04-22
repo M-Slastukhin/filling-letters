@@ -65,9 +65,7 @@ def get_accoct(gender):
 
 # Инициалы
 def get_initials(name, patronymic):
-    initials = ''
-    initials = f'{name[0]}.{patronymic[0]}.'
-    return initials
+    return f'{name[0]}.{patronymic[0]}.'
 
 # Фамилия родительный падеж
 def get_surname_dative(surname, gender):
