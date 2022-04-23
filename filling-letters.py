@@ -119,22 +119,17 @@ def get_position_dative(position):
 # склонение названия организации
 def get_organization(organization):
     split_org = organization.split(' ')
-    n = len(split_org)
-    org_r = ''
     if split_org[0].lower() == 'администрация':
-        split_org[0] = split_org[0][0:-1]+'и'
+        split_org[0] = split_org[0][:-1]+'и'
         split_org[0] = split_org[0].lower()
-        for i in range (0, n):
-            org_r = org_r+' '+split_org[i]
     elif split_org[0].lower() == 'территориальное':
-        split_org[0] = split_org[0][0:-1] + 'го'
+        split_org[0] = split_org[0][:-1] + 'го'
         split_org[0] = split_org[0].lower()
         if split_org[1].lower() == 'управление':
-            split_org[1] = split_org[1][0:-1] + 'я'
-        for i in range(0, n):
-            org_r = org_r + ' ' + split_org[i]
+            split_org[1] = split_org[1][:-1] + 'я'
     else:
-        org_r = organization
+        return organization
+    org_r = ' '.join(split_org)
     return org_r
 
 # получение навания для файла - название организации без ковычек и символов, недопустимых для имени файла
