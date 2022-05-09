@@ -1,6 +1,5 @@
 from docxtpl import DocxTemplate
 from fl_def import get_file_name
-
 doc_mail = DocxTemplate('письмо_шаблон.docx')
 doc_act = DocxTemplate('акт_шаблон.docx')
 doc_plan = DocxTemplate('схема_шаблон.docx')
