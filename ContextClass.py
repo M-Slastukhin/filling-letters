@@ -36,29 +36,27 @@ class ContextClass:
     def _get_surname_dative(surname: str, gender: str) -> str:
         vowels = ['а', 'е', 'ё', 'и', 'й', 'о', 'у', 'э', 'ю', 'я']
         if surname[-2:] == 'ко':
-            surname_d = surname
+            return surname.capitalize()
         elif surname[-2:] == 'ия':
-            surname_d = surname[:-1] + 'и'
+            surname = surname[:-1] + 'и'
         elif gender == 'female':
             if surname[-3:] == 'ина':
-                surname_d = surname[:-1] + 'ой'
+                surname = surname[:-1] + 'ой'
             elif surname[-3:] == 'ова':
-                surname_d = surname[:-1] + 'ой'
+                surname = surname[:-1] + 'ой'
             elif surname[-3:] == 'ева':
-                surname_d = surname[:-1] + 'ой'
+                surname = surname[:-1] + 'ой'
             else:
-                surname_d = surname
+                return surname.capitalize()
         elif gender == 'male':
             for i in vowels:
                 if surname[-1] == i:
-                    surname_d = surname
-                    break
+                    return surname.capitalize()
                 elif surname.lower() == 'коломиец':
-                    surname_d = 'коломийцу'
-                    break
+                    return 'Коломийцу'
             else:
-                surname_d = f'{surname}у'
-        return surname_d.capitalize()
+                surname = f'{surname}у'
+        return surname.capitalize()
 
     # Должность адресата в родительном падеже
     @staticmethod
