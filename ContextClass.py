@@ -10,11 +10,11 @@ class ContextClass:
     __str__ = __repr__
 
     # Пол адресата
-    def get_gender(self, gender):
-        #gender = self.lander_data[6]
-        if gender[0].lower() == 'м':
+    @staticmethod
+    def _get_gender(gender_ru):
+        if gender_ru[0].lower() == 'м':
             return 'male'
-        elif gender[0].lower() == 'ж':
+        elif gender_ru[0].lower() == 'ж':
             return 'female'
         else:
             return 'male'
@@ -107,8 +107,8 @@ class ContextClass:
             'name': lander_data[4].capitalize(),
             'patronymic': lander_data[5].capitalize(),
             'surname': lander_data[3].capitalize(),
-            'surname_d': self._get_surname_dative(lander_data[3], self.get_gender(lander_data[6])),
-            'accoct': self._get_accoct(self.get_gender(lander_data[6]))
+            'surname_d': self._get_surname_dative(lander_data[3], self._get_gender(lander_data[6])),
+            'accoct': self._get_accoct(self._get_gender(lander_data[6]))
         }
 
     def get(self) -> dict:
