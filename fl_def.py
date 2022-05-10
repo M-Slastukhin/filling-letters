@@ -13,6 +13,7 @@ for column in sheet['B2':str(b_rows)]:
             continue
         choice_data.append(cell.value)
 
+
 # Получение данных по выбранной организации
 def lander_info(choice_index=0) -> list:
     lander_data = []
