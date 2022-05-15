@@ -1,8 +1,8 @@
 from docxtpl import DocxTemplate
 import docx.opc.exceptions
 from fl_def import get_file_name
-from alert_windows import no_mail, no_act
-#from vsdx import VisioFile
+from alert_windows import no_mail, no_act, no_plan
+from vsdx import VisioFile
 
 doc_mail = DocxTemplate('письмо_шаблон.docx')
 doc_act = DocxTemplate('акт_шаблон.docx')
@@ -29,11 +29,15 @@ def act_save(context):
 
 # создание схемы
 def plan_save(context):
-    #file_name = get_file_name(context['organization'])
-    #with VisioFile('схема_шаблон.vsdx') as vis:
-    #    page = vis.pages_objects[0]
-    #    shapes_A = page.find_shapes_by_text('A')
+    try:
+        file_name = get_file_name(context['organization'])
+        with VisioFile('схема_шаблон.vsdx') as vis:
+            page = vis.pages[0]
+            page.apply_text_context(context)
+            vis.save_vsdx(f'схема {file_name}.vsdx')
+    except FileNotFoundError:
+        no_plan()
      #   save_vsdx(new_filename=f'схема {file_name}')
-    doc_plan.render(context)
-    file_name = get_file_name(context['organization'])
-    doc_plan.save(f'схема {file_name}.docx')
+    #doc_plan.render(context)
+    #file_name = get_file_name(context['organization'])
+    #doc_plan.save(f'схема {file_name}.docx')
