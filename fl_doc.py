@@ -1,6 +1,5 @@
 from docxtpl import DocxTemplate
 import docx.opc.exceptions
-from fl_def import get_file_name
 from alert_windows import no_mail, no_act, no_plan
 from vsdx import VisioFile
 
@@ -13,8 +12,7 @@ doc_plan = DocxTemplate('схема_шаблон.docx')
 def mail_save(context):
     try:
         doc_mail.render(context)
-        file_name = get_file_name(context['organization'])
-        doc_mail.save(f'письмо {file_name}.docx')
+        doc_mail.save(f'письмо {context["file_name"]}.docx')
     except docx.opc.exceptions.PackageNotFoundError:
         no_mail()
 
@@ -22,18 +20,16 @@ def mail_save(context):
 def act_save(context):
     try:
         doc_act.render(context)
-        file_name = get_file_name(context['organization'])
-        doc_act.save(f'акт {file_name}.docx')
+        doc_act.save(f'акт {context["file_name"]}.docx')
     except docx.opc.exceptions.PackageNotFoundError:
         no_act()
 
 # создание схемы
 def plan_save(context):
     try:
-        file_name = get_file_name(context['organization'])
         with VisioFile('схема_шаблон.vsdx') as vis:
             page = vis.pages[0]
             page.apply_text_context(context)
-            vis.save_vsdx(f'схема {file_name}.vsdx')
+            vis.save_vsdx(f'схема {context("file_name")}.vsdx')
     except FileNotFoundError:
         no_plan()

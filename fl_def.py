@@ -26,15 +26,4 @@ def lander_info(choice_index=0) -> list:
             if cell.value is None or cell.value == " ":
                 continue
             lander_data.append(cell.value)
-    #print(lander_data)
     return lander_data
-
-# получение навания для файла - название организации без ковычек и символов, недопустимых для имени файла
-def get_file_name(organization_name):
-    file_name = organization_name.replace('?', '')
-    file_name = file_name.replace('"', '')
-    file_name = file_name.replace('\\', '')
-    file_name = file_name.replace('|', ' ')
-    file_name = file_name.replace('/', ' ')
-    file_name = file_name.replace(':', ' ')
-    return file_name

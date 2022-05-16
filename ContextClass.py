@@ -104,6 +104,16 @@ class ContextClass:
         elif type_of_organization.lower() == 'землепользователь':
             return organization_r
 
+    # получение навания для файла - название организации без ковычек и символов, недопустимых для имени файла
+    @staticmethod
+    def _get_file_name(organization):
+        file_name = organization.replace('?', '')
+        file_name = file_name.replace('"', '')
+        file_name = file_name.replace('\\', '')
+        file_name = file_name.replace('|', ' ')
+        file_name = file_name.replace('/', ' ')
+        file_name = file_name.replace(':', ' ')
+        return file_name
 
     def update(self, lander_data):
         self.context = {
@@ -119,9 +129,9 @@ class ContextClass:
             'accoct': self._get_accoct(self._get_gender(lander_data[7])),
             'adress': lander_data[8],
             'tel': lander_data[9],
-            'territory': self._get_territory(lander_data[1], self._get_organization(lander_data[2]))
+            'territory': self._get_territory(lander_data[1], self._get_organization(lander_data[2])),
+            'file_name': self._get_file_name(lander_data[2])
         }
 
     def get(self) -> dict:
         return self.context
-
