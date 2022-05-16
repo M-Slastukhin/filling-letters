@@ -35,7 +35,6 @@ while True:
         user_guide()
     if event == sg.WIN_CLOSED or event == 'Выход':  # закрытие окна
         break
-    #print('You entered ', values[0])
 
 
 window.close()

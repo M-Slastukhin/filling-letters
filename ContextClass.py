@@ -97,21 +97,31 @@ class ContextClass:
         org_r = ' '.join(split_org)
         return org_r
 
+    @staticmethod
+    def _get_territory(type_of_organization, organization_r):
+        if type_of_organization.lower() == 'строительная организация':
+            return 'Саратова и Саратовской области'
+        elif type_of_organization.lower() == 'землепользователь':
+            return organization_r
+
+
     def update(self, lander_data):
         self.context = {
-            'position': lander_data[2],
-            'position_d': self._get_position_dative(lander_data[2]),
-            'organization': lander_data[1],
-            'organization_r': self._get_organization(lander_data[1]),
-            'initials': self._get_initials(lander_data[4], lander_data[5]),
-            'name': lander_data[4].capitalize(),
-            'patronymic': lander_data[5].capitalize(),
-            'surname': lander_data[3].capitalize(),
-            'surname_d': self._get_surname_dative(lander_data[3], self._get_gender(lander_data[6])),
-            'accoct': self._get_accoct(self._get_gender(lander_data[6]))
+            'position': lander_data[3],
+            'position_d': self._get_position_dative(lander_data[3]),
+            'organization': lander_data[2],
+            'organization_r': self._get_organization(lander_data[2]),
+            'initials': self._get_initials(lander_data[5], lander_data[6]),
+            'name': lander_data[5].capitalize(),
+            'patronymic': lander_data[6].capitalize(),
+            'surname': lander_data[4].capitalize(),
+            'surname_d': self._get_surname_dative(lander_data[4], self._get_gender(lander_data[7])),
+            'accoct': self._get_accoct(self._get_gender(lander_data[7])),
+            'adress': lander_data[8],
+            'tel': lander_data[9],
+            'territory': self._get_territory(lander_data[1], self._get_organization(lander_data[2]))
         }
 
     def get(self) -> dict:
         return self.context
 
-# if __name__ == "__main__":

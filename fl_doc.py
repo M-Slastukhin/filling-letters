@@ -37,7 +37,3 @@ def plan_save(context):
             vis.save_vsdx(f'схема {file_name}.vsdx')
     except FileNotFoundError:
         no_plan()
-     #   save_vsdx(new_filename=f'схема {file_name}')
-    #doc_plan.render(context)
-    #file_name = get_file_name(context['organization'])
-    #doc_plan.save(f'схема {file_name}.docx')
