@@ -1,7 +1,11 @@
 import PySimpleGUI as sg
-from fl_def import choice_data, lander_info
+from alert_windows import user_guide, no_landusers_list
+try:
+    from fl_def import choice_data, lander_info
+except FileNotFoundError:
+    no_landusers_list()
+    exit()
 from fl_doc import mail_save, act_save, plan_save
-from alert_windows import user_guide
 from ContextClass import ContextClass
 
 lander_data = lander_info()  # полчучение информации из exel по-умолчанию для нулевого землепользователя

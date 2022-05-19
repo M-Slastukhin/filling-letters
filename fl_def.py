@@ -1,21 +1,21 @@
 import openpyxl
 from alert_windows import no_landusers_list
 
-try:
-    wb = openpyxl.load_workbook('landusers_list.xlsx')
-    sheet = wb.active
-    rows = sheet.max_row
-    C_rows = 'C' + str(rows)
+#try:
+wb = openpyxl.load_workbook('landusers_list.xlsx')
+sheet = wb.active
+rows = sheet.max_row
+C_rows = 'C' + str(rows)
 
 # Получение перечня оргвнизаций
-    choice_data = []
-    for column in sheet['C2':str(C_rows)]:
-        for cell in column:
-            if cell.value is None or cell.value == " ":
-               continue
-            choice_data.append(cell.value)
-except FileNotFoundError:
-    no_landusers_list()
+choice_data = []
+for column in sheet['C2':str(C_rows)]:
+    for cell in column:
+        if cell.value is None or cell.value == " ":
+            continue
+        choice_data.append(cell.value)
+#except FileNotFoundError:
+#    no_landusers_list()
 
 
 # Получение данных по выбранной организации
