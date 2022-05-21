@@ -1,7 +1,6 @@
 import openpyxl
-from alert_windows import no_landusers_list
 
-#try:
+
 wb = openpyxl.load_workbook('landusers_list.xlsx')
 sheet = wb.active
 rows = sheet.max_row
@@ -14,8 +13,6 @@ for column in sheet['C2':str(C_rows)]:
         if cell.value is None or cell.value == " ":
             continue
         choice_data.append(cell.value)
-#except FileNotFoundError:
-#    no_landusers_list()
 
 
 # Получение данных по выбранной организации
