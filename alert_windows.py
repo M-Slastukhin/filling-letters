@@ -1,38 +1,27 @@
 import PySimpleGUI as sg
 
 
-def no_landusers_list():
-    sg.theme('BluePurple')
-    layout = [[sg.Text('Отсутствует фаил landusers_list.xlsx')],
-              [sg.Button('Руководство пользователя'), sg.Button('Выход')]]
-    window = sg.Window('Заполнение писем', layout, element_justification='c')
-    while True:
-        event, values = window.read()
-        if event == 'Руководство пользователя':
-            user_guide()
-        if event == sg.WIN_CLOSED or event == 'Выход':  # закрытие окна
-            break
-    window.close()
-
-
-def no_mail():
-    sg.popup('Отсутствует шаблон письма', 'Добавьте документ "письмо_шаблон.docx" в папку с программой')
-
-
-def no_act():
-    sg.popup('Отсутствует шаблон акта', 'Добавьте документ "акт_шаблон.docx" в папку с программой')
+def no_docx():
+    sg.popup('Укажите шаблон в формате *.docx')
 
 
 def no_plan():
-    sg.popup('Отсутствует шаблон схемы', 'Добавьте документ "схема_шаблон.vsdx" в папку с программой')
+    sg.popup('Укажите шаблон схемы в формате *.vsdx')
+
+
+def no_xlsx():
+    sg.popup('Укажите фаил с исходными данными в формате *.xlsx')
+
+
+def bad_xlsx():
+    sg.popup('Фаил с исходными данными не заполнен или заполнен неверно')
 
 
 def user_guide():
-    sg.popup('Для использования программы необходимо разместить подговотовленные файлы '
-             'landusers_list.xlsx, письмо_шаблон.docx, акт_шаблон.docx, схема_шаблон.vsdx '
-             'в папке с программой.\n\nФаил landusers_list должен содержать исходные данные по '
-             'категориям:\n  название организации (organization),\n  должность (position),\n  фамилия (surname),\n '
-             ' имя (name),\n  отчество (patronymic),\n  пол (gender),\n  адрес (adress),\n  '
+    sg.popup('Для использования программы необходимо подговотовить файл в формате *.xlsx '
+             'с исходными данными:'
+             '\nназвание организации (organization), должность (position), фамилия (surname),'
+             ' имя (name), отчество (patronymic), пол (gender), адрес (adress), '
              'тип(землепользователь/строительная организация) (type)\n\nПодстановка данных в письмо,'
              ' акт или схему осуществляется заменой ключевых слов.\n\nДоступные ключевые слова:\n'
              '{{organization}} - название организации\n'
@@ -52,4 +41,4 @@ def user_guide():
 
 
 def successful(file_name):
-    sg.popup(f'Создан фаил {file_name}')
+    sg.popup(f'Создан фаил \"{file_name}\"')
