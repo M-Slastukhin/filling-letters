@@ -17,6 +17,7 @@ def excel_read(xlsx_file):
     except openpyxl.utils.exceptions.InvalidFileException:
         no_xlsx()
 
+
 # Получение данных по выбранной организации
 def lander_info(choice_index) -> list:
     lander_data = []
@@ -25,4 +26,4 @@ def lander_info(choice_index) -> list:
             if cell.value is None or cell.value == " ":
                 continue
             lander_data.append(cell.value)
-    return lander_data
+        return lander_data

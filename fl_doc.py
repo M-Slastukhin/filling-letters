@@ -10,15 +10,22 @@ def docx_save(context, sample_docx, doc_form):
     try:
         docx_file = DocxTemplate(sample_docx)
         docx_file.render(context)
+    except docx.opc.exceptions.PackageNotFoundError:
+        no_docx()
+        return None
+    except ValueError:
+        no_docx()
+        return None
+    except KeyError:
+        no_docx()
+        return None
+    try:
         docx_file.save(f'{doc_form} {context["file_name"]}.docx')
         if os.path.isfile(f'{doc_form} {context["file_name"]}.docx'):
             successful(f'{doc_form} {context["file_name"]}.docx')
-    except docx.opc.exceptions.PackageNotFoundError:
-        no_docx()
-    except ValueError:
-        no_docx()
     except KeyError:
         bad_xlsx()
+
 
 # создание vsdx файла
 def vsdx_save(context, sample_vsdx):
@@ -27,9 +34,12 @@ def vsdx_save(context, sample_vsdx):
             page = vis.pages[0]
             page.apply_text_context(context)
             vis.save_vsdx(f"схема {context['file_name']}.vsdx")
-            if os.path.isfile(f'схема {context["file_name"]}.vsdx'):
-                successful(f'схема {context["file_name"]}.vsdx')
+
+        if os.path.isfile(f'схема {context["file_name"]}.vsdx'):
+            successful(f'схема {context["file_name"]}.vsdx')
     except TypeError:
+        no_plan()
+    except FileNotFoundError:
         no_plan()
     except KeyError:
         bad_xlsx()
