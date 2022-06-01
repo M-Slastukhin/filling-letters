@@ -31,34 +31,48 @@ class ContextClass:
     def _get_initials(name: str, patronymic: str) -> str:
         return f'{name[0]}.{patronymic[0]}.'
 
-    # Фамилия родительный падеж
+    # Фамилия дательный падеж
     @staticmethod
     def _get_surname_dative(surname: str, gender: str) -> str:
-        vowels = ['а', 'е', 'ё', 'и', 'й', 'о', 'у', 'э', 'ю', 'я']
+        vowels = ['а', 'е', 'ё', 'и', 'о', 'у', 'э', 'ю', 'я']
+        f_endings = ['ина', 'ына', 'ова', 'ева']
+        m_endings = ['ый', 'ий', 'ой']
         if surname[-2:] == 'ко':
             return surname.capitalize()
         elif surname[-2:] == 'ия':
-            surname = surname[:-1] + 'и'
+            return surname[:-1].capitalize() + 'е'
         elif gender == 'female':
-            if surname[-3:] == 'ина':
-                surname = surname[:-1] + 'ой'
-            elif surname[-3:] == 'ова':
-                surname = surname[:-1] + 'ой'
-            elif surname[-3:] == 'ева':
-                surname = surname[:-1] + 'ой'
+            if any(surname[-3:] == ending for ending in f_endings):
+                return surname[:-1].capitalize() + 'ой'
+            elif surname[-2:] == 'ая':
+                return surname[:-2].capitalize() + 'ой'
             else:
                 return surname.capitalize()
-        elif gender == 'male':
-            for i in vowels:
-                if surname[-1] == i:
-                    return surname.capitalize()
-                elif surname.lower() == 'коломиец':
-                    return 'Коломийцу'
+        if gender == 'male':
+            if surname[-3:] == 'ний':
+                return surname[:-2].capitalize() + 'ему'
+            elif any(surname[-2:] == ending for ending in m_endings):
+                return surname[:-2].capitalize() + 'ому'
+            elif surname[-1:] == 'а':
+                return surname[:-1].capitalize() + 'е'
+            elif any(surname[-1] == v for v in vowels):
+                return surname.capitalize()
+            elif surname[-1] == 'ь':
+                return surname[:-1].capitalize() + 'ю'
+            elif surname[-1] == 'й':
+                return surname.capitalize()
+            elif surname[-2:] == 'ец':
+                if surname[-3] == 'л':
+                    return surname[:-2].capitalize() + 'ьцу'
+                elif any(surname[-3] == v for v in vowels):
+                    return surname[:-2].capitalize() + 'йцу'
+                else:
+                    return surname[:-2].capitalize() + 'цу'
             else:
-                surname = f'{surname}у'
-        return surname.capitalize()
+                return surname.capitalize() + 'у'
 
-    # Должность адресата в родительном падеже
+
+# Должность адресата в дательном падеже
     @staticmethod
     def _get_position_dative(position: str):
         split_str = position.split(' ')
@@ -115,6 +129,7 @@ class ContextClass:
         file_name = file_name.replace(':', ' ')
         return file_name
 
+
     def update(self, lander_data):
         self.context = {
             'position': lander_data[3],
@@ -132,6 +147,7 @@ class ContextClass:
             'territory': self._get_territory(lander_data[1], self._get_organization(lander_data[2])),
             'file_name': self._get_file_name(lander_data[2])
         }
+
 
     def get(self) -> dict:
         return self.context
